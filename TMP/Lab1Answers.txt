@@ -1,0 +1,62 @@
+Lab 1 answers for additional questions:
+
+1.What are the advantages and disadvantages of each of the two scheduling policies? Also, give the advantages and disadvantages of the round robin scheduling policy originally implemented in Xinu.
+
+Ans:
+
+Random:
+Advantages:
+The Xinu scheduler runs the lower priority processes only if the higher priority processes finish execution. This causes the problem of starvation. Random scheduler solves this issue by proportionally allocating CPU usage time. 
+Each process gets a share of the CPU for time proportional to its priority.
+
+Disadvantages:
+As the name says, the selection criteria is random, which is not desirable in real life scenarios.
+This algorithm doesn't consider the usage activity of the processes. i.e., the aging factor.
+If the processes are preempted frequently, due to the overhead of context switching, processes are slowed down.
+
+Linux:
+Advantages:
+In this type of scheduler, the concept of fairness is even more emphasized. 
+The processes which haven't used up their quota are given preference in the subsequent epochs(all the while considering the priorities of the processes).
+
+Disadvantages:
+It is a complex algorithm to implement.
+The processing time(time taken by the algorithm to choose the next process) might add to the overhead of context switching, making scheduling slower.
+
+Xinu:
+Advantages:
+Straightforward and easy to implement.
+Higher priority processes are executed first, no waiting times(the whole point of having the concept of priorities).
+
+Disadvantages:
+If there is always a higher priority process, a lower priority process is never scheduled. And it will never get executed.
+This algorithm is not fair, leads to starvation.
+
+
+
+2. Describe when each of the schedulers run the NULL process.
+Ans:
+NULL process is scheduled when
+Xinu: When there are no processes in the ready queue.
+Random: When there are no processes in the ready queue.
+Linux: Where there is no process with non-zero goodness in the ready queue.
+
+
+3. Assume that there are three processes P1, P2, P3 that will run forever without blocking. We want to allocate the following CPU times to each of them: 20% to P1, 30% to P2, and 50% to P3. Which priorities do we need to set to P1, P2, and P3 to accomplish this if we want to use the Random scheduler? Assume that those processes are the only ones running in the machine. Could you give a generalization of your result to n processes? Explain.
+
+Ans:
+The random scheduler allocates CPU times to processes proportional to their priorities. 
+Hence, to accomplish the given scenario(20% to P1, 30% to P2, and 50% to P3), the priorities of the processes should be in the ratio 2:3:5.
+One combination of priorities can be 20, 30 and 50 respectively.
+
+Generalization:
+P1->pprio : P2->pprio : P3->pprio = 2:3:5
+
+Or
+P1->pprio = 2x
+P2->pprio = 3x
+P3->pprio = 5x
+
+Where x is a positive integer.
+
+
